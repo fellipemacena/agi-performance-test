@@ -1,47 +1,59 @@
-# Performance Test
+# Teste de Performance - BlazeDemo
 
-## Objective
-Evaluate the system behavior under different load patterns using Apache JMeter.
+## Objetivo
+Avaliar o comportamento da aplicação sob diferentes padrões de carga utilizando Apache JMeter.
 
-## Scenarios
+## Cenários executados
 
-### Load Test
-- ~250 users
-- Gradual ramp-up
-- Duration: ~60 seconds
+### Teste de Carga (Load Test)
+Simulação de aumento gradual de usuários.
 
-### Spike Test
-- ~300 users
-- Fast ramp-up
-- Duration: ~30 seconds
+- ~250 usuários
+- Ramp-up gradual (60 segundos)
+- Duração: ~60 segundos
 
-## Test Flow
+### Teste de Pico (Spike Test)
+Simulação de aumento abrupto de usuários.
+
+- ~300 usuários
+- Ramp-up rápido (5 segundos)
+- Duração: ~30 segundos
+
+## Fluxo testado
 
 1. GET Home
 2. POST Search Flights
 3. POST Select Flight
 4. POST Confirm Flight
 
-## Strategy
+O fluxo foi agrupado em um Transaction Controller para medir o tempo total da transação.
 
-- Transaction Controller used to measure full flow execution
-- "Stop Thread" strategy applied to avoid cascading failures
-- Fixed data used for flight selection (no correlation implemented)
+## Estratégias adotadas
 
-## Results
+- Uso de Transaction Controller com "Generate parent sample"
+- Estratégia "Stop Thread" para evitar propagação de erros
+- Utilização de dados fixos para seleção de voo (sem correlação dinâmica)
 
-### Load Test
-- Stable response time
-- Low error rate
-- Consistent throughput
+## Resultados
 
-### Spike Test
-- Increased response time
-- Higher variability
-- Signs of performance degradation under sudden load
+### Teste de Carga
+- Tempo de resposta estável durante a execução
+- Baixa taxa de erro
+- Throughput consistente
 
-## Execution
+### Teste de Pico
+- Aumento no tempo de resposta
+- Maior variabilidade nos tempos
+- Indícios de degradação sob carga abrupta
 
-Run with:
+## Conclusão
+
+O sistema apresentou comportamento estável sob carga gradual.
+
+No cenário de pico, foi possível observar degradação no tempo de resposta, indicando limitações sob aumento repentino de usuários.
+
+## Execução
+
+Para executar o teste:
 
 jmeter -n -t agi-performance-test.jmx -l resultado.jtl
