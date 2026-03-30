@@ -1,4 +1,4 @@
-# Teste de Performance - BlazeDemo
+# Teste de Performance
 
 ## Objetivo
 Avaliar o comportamento da aplicação sob diferentes padrões de carga utilizando Apache JMeter.
