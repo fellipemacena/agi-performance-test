@@ -1,29 +1,47 @@
-# agi-performance-test
+# Performance Test
 
-## Objetivo
-Executar testes de performance no fluxo de compra de passagem aérea do sistema BlazeDemo, conforme o enunciado do teste técnico.
+## Objective
+Evaluate the system behavior under different load patterns using Apache JMeter.
 
-## Ferramenta utilizada
-- Apache JMeter
+## Scenarios
 
-## Cenário testado
-Fluxo de compra com sucesso:
-- Get Home
-- POST Search Flights
-- POST Select Flight
-- POST Confirm Flight
+### Load Test
+- ~250 users
+- Gradual ramp-up
+- Duration: ~60 seconds
 
-## Estrutura do projeto
-- `jmeter/blazedemo-load-test.jmx`: teste de carga
-- `jmeter/blazedemo-spike-test.jmx`: teste de pico
-- `evidences/`: prints dos resultados
+### Spike Test
+- ~300 users
+- Fast ramp-up
+- Duration: ~30 seconds
 
-## Como executar
-1. Instalar o Apache JMeter
-2. Abrir o arquivo `.jmx` desejado no JMeter
-3. Executar o teste pela interface ou via CLI
+## Test Flow
 
-### Execução via CLI
-```bash
-jmeter.bat -n -t "jmeter/blazedemo-load-test.jmx" -l "load-result.jtl" -e -o "load-report"
-jmeter.bat -n -t "jmeter/blazedemo-spike-test.jmx" -l "spike-result.jtl" -e -o "spike-report"
+1. GET Home
+2. POST Search Flights
+3. POST Select Flight
+4. POST Confirm Flight
+
+## Strategy
+
+- Transaction Controller used to measure full flow execution
+- "Stop Thread" strategy applied to avoid cascading failures
+- Fixed data used for flight selection (no correlation implemented)
+
+## Results
+
+### Load Test
+- Stable response time
+- Low error rate
+- Consistent throughput
+
+### Spike Test
+- Increased response time
+- Higher variability
+- Signs of performance degradation under sudden load
+
+## Execution
+
+Run with:
+
+jmeter -n -t agi-performance-test.jmx -l resultado.jtl
